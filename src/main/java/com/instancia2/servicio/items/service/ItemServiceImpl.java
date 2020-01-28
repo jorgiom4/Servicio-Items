@@ -3,6 +3,7 @@ package com.instancia2.servicio.items.service;
 import com.instancia2.servicio.items.model.Item;
 import com.instancia2.servicio.items.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +21,9 @@ public class ItemServiceImpl implements IItemService {
 
     @Override
     public List<Item> findAll() {
+
+        System.out.println("\nUsando el cliente HTTP por RestTemplate");
+
         // Obtenemos el listado de los productos a través del servicio de productos usando RestTemplate
         List<Producto> productos = Arrays.asList(clienteRest.getForObject("http://localhost:8001/listar", Producto[].class));
 
@@ -28,6 +32,9 @@ public class ItemServiceImpl implements IItemService {
 
     @Override
     public Item findById(Long id, Integer cantidad) {
+
+        System.out.println("\nUsando el cliente HTTP por RestTemplate");
+
         Map<String, String> pathVariables = new HashMap<String, String>();
         pathVariables.put("id", id.toString());
         Producto producto = clienteRest.getForObject("http://localhost:8001/listar/{id}", Producto.class, pathVariables);
