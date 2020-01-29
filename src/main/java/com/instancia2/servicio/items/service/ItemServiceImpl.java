@@ -3,6 +3,7 @@ package com.instancia2.servicio.items.service;
 import com.instancia2.servicio.items.model.Item;
 import com.instancia2.servicio.items.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Service
+@Service("serviceRestTemplate")
 public class ItemServiceImpl implements IItemService {
 
     @Autowired
@@ -25,7 +26,7 @@ public class ItemServiceImpl implements IItemService {
         System.out.println("\nUsando el cliente HTTP por RestTemplate");
 
         // Obtenemos el listado de los productos a través del servicio de productos usando RestTemplate
-        List<Producto> productos = Arrays.asList(clienteRest.getForObject("http://localhost:8001/listar", Producto[].class));
+        List<Producto> productos= Arrays.asList(clienteRest.getForObject("http://servicio-productos/listar", Producto[].class));
 
         return productos.stream().map(p -> new Item(p, 1)).collect(Collectors.toList());
     }
@@ -37,7 +38,7 @@ public class ItemServiceImpl implements IItemService {
 
         Map<String, String> pathVariables = new HashMap<String, String>();
         pathVariables.put("id", id.toString());
-        Producto producto = clienteRest.getForObject("http://localhost:8001/listar/{id}", Producto.class, pathVariables);
+        Producto producto = clienteRest.getForObject("http://servicio-productos/listar/{id}", Producto.class, pathVariables);
 
         return new Item(producto, cantidad);
     }

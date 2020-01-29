@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Interface para definir el cliente HTTP Rest de para el servicio-productos usando Feing
  */
-@FeignClient(name = "servicio-productos", url = "http://localhost:8001")
+@FeignClient(name = "servicio-productos")
 public interface ProductoClienteRest {
 
     @GetMapping("/listar")

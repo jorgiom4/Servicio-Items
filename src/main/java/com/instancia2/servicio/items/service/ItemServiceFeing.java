@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@Primary
+@Service("serviceFeing")
 public class ItemServiceFeing implements IItemService {
 
     //Inyectamos el cliente HTTP usando Feing
