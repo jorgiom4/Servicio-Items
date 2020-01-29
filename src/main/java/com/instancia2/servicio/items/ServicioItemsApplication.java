@@ -2,10 +2,11 @@ package com.instancia2.servicio.items;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.ribbon.RibbonClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-@RibbonClient(name = "servicio-productos")
+@EnableEurekaClient
+// @RibbonClient(name = "servicio-productos") --> Si quita al tener Eureka que viene con Ribbon implicito
 @EnableFeignClients
 @SpringBootApplication
 public class ServicioItemsApplication {
