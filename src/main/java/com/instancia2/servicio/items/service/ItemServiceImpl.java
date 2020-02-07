@@ -1,10 +1,11 @@
 package com.instancia2.servicio.items.service;
 
+import com.instancia2.servicio.commons.model.Producto;
 import com.instancia2.servicio.items.model.Item;
-import com.instancia2.servicio.items.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,5 +42,32 @@ public class ItemServiceImpl implements IItemService {
         Producto producto = clienteRest.getForObject("http://servicio-productos/listar/{id}", Producto.class, pathVariables);
 
         return new Item(producto, cantidad);
+    }
+
+    @Override
+    public Producto save(Producto producto) {
+        HttpEntity<Producto> body = new HttpEntity<>(producto);
+        ResponseEntity<Producto> respuesta =  clienteRest.exchange("http://servicio-productos/crear", HttpMethod.POST, body, Producto.class);
+        Producto productoRespuesta = respuesta.getBody();
+
+        return productoRespuesta;
+    }
+
+    @Override
+    public Producto update(Producto producto, Long id) {
+        HttpEntity<Producto> body = new HttpEntity<>(producto);
+        HashMap<String, String> pathVariables = new HashMap<>();
+        pathVariables.put("id", id.toString());
+        ResponseEntity<Producto> respesta = clienteRest.exchange("http://servicio-productos/editar/{id}", HttpMethod.PUT, body, Producto.class, pathVariables);
+
+        return respesta.getBody();
+    }
+
+    @Override
+    public void delete(Long id) {
+        HashMap<String, String> pathVariables = new HashMap<>();
+        pathVariables.put("id", id.toString());
+        clienteRest.delete("http://servicio-productos/eliminar/{id}", pathVariables);
+
     }
 }

@@ -1,12 +1,11 @@
 package com.instancia2.servicio.items.service;
 
+import com.instancia2.servicio.commons.model.Producto;
 import com.instancia2.servicio.items.clienteRest.ProductoClienteRest;
 import com.instancia2.servicio.items.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,5 +31,20 @@ public class ItemServiceFeing implements IItemService {
         System.out.println("\nUsando el cliente HTTP por Feing");
 
         return new Item(clienteFeing.findProducto(id),cantidad);
+    }
+
+    @Override
+    public Producto save(Producto producto) {
+        return clienteFeing.crear(producto);
+    }
+
+    @Override
+    public Producto update(Producto producto, Long id) {
+        return clienteFeing.update(producto,id);
+    }
+
+    @Override
+    public void delete(Long id) {
+        clienteFeing.eliminar(id);
     }
 }

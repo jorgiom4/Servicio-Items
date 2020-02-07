@@ -1,5 +1,7 @@
 package com.instancia2.servicio.items.model;
 
+import com.instancia2.servicio.commons.model.Producto; // Usamos la entindad productos del servicio commons
+
 public class Item {
 
 	private Producto producto;
